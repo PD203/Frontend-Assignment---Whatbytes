@@ -18,6 +18,7 @@ type Filters = {
   category: string;
   price: number;
   brand: string;
+  search: string;
 };
 
 type FilterContextType = {
@@ -33,7 +34,7 @@ export const FilterContext = createContext<FilterContextType | undefined>(
 export const useFilters = () => {
   const context = useContext(FilterContext);
   if (!context) {
-    throw new Error("useFilters must be used within a FilterProvider");
+    throw new Error("useFilters must be used within FilterProvider");
   }
   return context;
 };
@@ -45,42 +46,71 @@ export function FilterProvider({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  /* 🔹 INIT FILTERS FROM URL (ONCE) */
-  const [filters, setFilters] = useState<Filters>(() => ({
-    category: searchParams.get("category") || "All",
-    price: Number(searchParams.get("price")) || 1000,
-    brand: searchParams.get("brand") || "All",
-  }));
-
-  /* 🔒 Prevent first render push */
   const isFirstRender = useRef(true);
+  const searchDebounceRef = useRef<NodeJS.Timeout | null>(null);
 
-  /* ---------------- SYNC FILTERS → URL ---------------- */
+  /* ---------------- STATE ---------------- */
+
+  const [filters, setFilters] = useState<Filters>({
+    category: "All",
+    price: 1000,
+    brand: "All",
+    search: "",
+  });
+
+  /* ---------------- URL → STATE ---------------- */
+  useEffect(() => {
+    const nextFilters: Filters = {
+      category: searchParams.get("category") || "All",
+      price: Number(searchParams.get("price")) || 1000,
+      brand: searchParams.get("brand") || "All",
+      search: searchParams.get("search") || "",
+    };
+
+    const isSame =
+      nextFilters.category === filters.category &&
+      nextFilters.price === filters.price &&
+      nextFilters.brand === filters.brand &&
+      nextFilters.search === filters.search;
+
+    if (!isSame) {
+      setFilters(nextFilters);
+    }
+  }, [searchParams]);
+
+  /* ---------------- STATE → URL ---------------- */
   useEffect(() => {
     if (isFirstRender.current) {
       isFirstRender.current = false;
       return;
     }
 
-    const params = new URLSearchParams();
-
-    if (filters.category !== "All") {
-      params.set("category", filters.category);
+    // Debounce search
+    if (searchDebounceRef.current) {
+      clearTimeout(searchDebounceRef.current);
     }
 
-    if (filters.brand !== "All") {
-      params.set("brand", filters.brand);
-    }
+    searchDebounceRef.current = setTimeout(() => {
+      const params = new URLSearchParams();
 
-    if (filters.price !== 1000) {
-      params.set("price", String(filters.price));
-    }
+      if (filters.category !== "All") params.set("category", filters.category);
+      if (filters.brand !== "All") params.set("brand", filters.brand);
+      if (filters.price !== 1000) params.set("price", String(filters.price));
+      if (filters.search.trim()) params.set("search", filters.search);
 
-    const queryString = params.toString();
-    const url = queryString ? `${pathname}?${queryString}` : pathname;
+      const newUrl = params.toString()
+        ? `${pathname}?${params.toString()}`
+        : pathname;
 
-    router.replace(url, { scroll: false });
-  }, [filters, pathname, router]);
+      router.replace(newUrl, { scroll: false });
+    }, 1000); // 1 seconds debounce
+
+    return () => {
+      if (searchDebounceRef.current) {
+        clearTimeout(searchDebounceRef.current);
+      }
+    };
+  }, [filters.search, filters.category, filters.brand, filters.price, pathname, router]);
 
   /* ---------------- FILTER PRODUCTS ---------------- */
   const filteredProducts = useMemo(() => {
@@ -95,21 +125,23 @@ export function FilterProvider({ children }: { children: ReactNode }) {
 
       const priceMatch = product.price <= filters.price;
 
-      return categoryMatch && brandMatch && priceMatch;
+      const searchMatch = product.title
+        .toLowerCase()
+        .includes(filters.search.toLowerCase());
+
+      return (
+        categoryMatch &&
+        brandMatch &&
+        priceMatch &&
+        searchMatch
+      );
     });
   }, [filters]);
 
-  const value = useMemo(
-    () => ({
-      filters,
-      setFilters,
-      filteredProducts,
-    }),
-    [filters, filteredProducts]
-  );
-
   return (
-    <FilterContext.Provider value={value}>
+    <FilterContext.Provider
+      value={{ filters, setFilters, filteredProducts }}
+    >
       {children}
     </FilterContext.Provider>
   );

@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useState } from "react";
 import { Search, ShoppingCart, User } from "lucide-react";
+import { useFilters } from "@/context/FilterContext";
 
 export default function Header() {
-  const [searchQuery, setSearchQuery] = useState("");
+  const { filters, setFilters } = useFilters();
   const cartCount = 3;
 
   return (
@@ -27,23 +27,26 @@ export default function Header() {
           {/* CENTER — SEARCH */}
           <div className="flex justify-center">
             <div className="relative w-full max-w-xl">
-              <Search className="absolute cursor-pointer left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-white/80" />
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-white/80" />
+
               <input
                 type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                value={filters.search}
+                onChange={(e) =>
+                  setFilters((prev) => ({
+                    ...prev,
+                    search: e.target.value,
+                  }))
+                }
                 placeholder="Search for products..."
                 className="
                   w-full h-11 rounded-lg
                   bg-transparent
                   border border-white/40
-                 
                   pl-12 pr-4
                   text-white
                   placeholder-white/70
                   focus:outline-none
-                  
-                 
                 "
               />
             </div>
