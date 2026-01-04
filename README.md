@@ -1,10 +1,11 @@
 # Frontend Assignment - Whatbytes
 
-https://res.cloudinary.com/dpfvh7e5x/image/upload/v1767526777/Screenshot_2026-01-04_at_5.01.40_PM_mjhllj.png
+![Home](https://res.cloudinary.com/dpfvh7e5x/image/upload/v1767526777/Screenshot_2026-01-04_at_5.01.40_PM_mjhllj.png)
 
+## Live Demo
 
-Live - https://frontend-assignment-whatbytes-beta.vercel.app/
----
+🔗 **Deployed on Vercel:**  
+https://your-vercel-deployment-link.vercel.app
 
 ## Features
 
@@ -40,13 +41,6 @@ Live - https://frontend-assignment-whatbytes-beta.vercel.app/
 - ![Zustand](https://img.shields.io/badge/Zustand-State_Management-orange?style=for-the-badge)
 - ![lucide-react](https://img.shields.io/badge/Lucide_Icons-black?style=for-the-badge)
 - ![Vercel](https://img.shields.io/badge/Vercel-Deployed-black?style=for-the-badge&logo=vercel)
-
----
-
-## Live Demo
-
-🔗 **Deployed on Vercel:**  
-https://your-vercel-deployment-link.vercel.app
 
 ---
 
