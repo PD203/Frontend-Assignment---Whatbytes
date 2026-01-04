@@ -41,8 +41,3 @@ https://your-vercel-deployment-link.vercel.app
 - ![Zustand](https://img.shields.io/badge/Zustand-State_Management-orange?style=for-the-badge)
 - ![lucide-react](https://img.shields.io/badge/Lucide_Icons-black?style=for-the-badge)
 - ![Vercel](https://img.shields.io/badge/Vercel-Deployed-black?style=for-the-badge&logo=vercel)
-
----
-
-## Project Structure
-
