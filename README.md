@@ -5,7 +5,7 @@
 ## Live Demo
 
 🔗 **Deployed on Vercel:**  
-https://your-vercel-deployment-link.vercel.app
+https://frontend-assignment-whatbytes-beta.vercel.app/
 
 ## Features
 
