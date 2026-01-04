@@ -1,6 +1,5 @@
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
-import { FilterProvider } from "@/context/FilterContext";
+import { Suspense } from "react";
+import { AppBody } from "@/components/layout/AppBody";
 import "./globals.css";
 
 export default function RootLayout({
@@ -11,16 +10,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="min-h-screen flex flex-col">
-        <FilterProvider>
-          <Header />
-
-          {/* Page content */}
-          <main className="flex-1">
-            {children}
-          </main>
-
-          <Footer />
-        </FilterProvider>
+        <Suspense fallback={<div>Loading...</div>}>
+          <AppBody>{children}</AppBody>
+        </Suspense>
       </body>
     </html>
   );
