@@ -6,10 +6,7 @@ export default function Footer() {
   return (
     <footer
       className="
-        bg-gradient-to-r
-        from-[var(--primary-dark)]
-        to-[var(--primary)]
-        text-white
+        bg-primary-dark
       "
     >
       <div className="max-w-7xl mx-auto px-6 py-10">
@@ -17,7 +14,7 @@ export default function Footer() {
 
           {/* LEFT — FILTERS */}
           <div>
-            <h3 className="font-semibold text-lg mb-3">Filters</h3>
+            <h3 className="font-semibold text-white text-lg mb-3">Filters</h3>
             <ul className="space-y-2 text-white/80 text-sm">
               <li className="hover:text-white cursor-pointer">All</li>
               <li className="hover:text-white cursor-pointer">Electronics</li>
@@ -30,7 +27,7 @@ export default function Footer() {
 
           {/* CENTER — ABOUT */}
           <div>
-            <h3 className="font-semibold text-lg mb-3">About Us</h3>
+            <h3 className="font-semibold text-white text-lg mb-3">About Us</h3>
             <ul className="space-y-2 text-white/80 text-sm">
               <li className="hover:text-white cursor-pointer">About Us</li>
               <li className="hover:text-white cursor-pointer">Contact</li>
@@ -39,23 +36,23 @@ export default function Footer() {
 
           {/* RIGHT — SOCIAL */}
           <div>
-            <h3 className="font-semibold text-lg mb-3">Follow Us</h3>
+            <h3 className="font-semibold  text-white text-lg mb-3">Follow Us</h3>
             <div className="flex items-center gap-4 mt-2">
               <a
                 href="#"
-                className="w-10 h-10 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center transition"
+                className="w-10 h-10 rounded-full cursor-pointer bg-primary flex items-center justify-center transition"
               >
                 <Facebook className="w-5 h-5 text-white" />
               </a>
               <a
                 href="#"
-                className="w-10 h-10 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center transition"
+                className="w-10 h-10 rounded-full cursor-pointer bg-primary flex items-center justify-center transition"
               >
                 <Twitter className="w-5 h-5 text-white" />
               </a>
               <a
                 href="#"
-                className="w-10 h-10 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center transition"
+                className="w-10 h-10 rounded-full cursor-pointer bg-primary flex items-center justify-center transition"
               >
                 <Instagram className="w-5 h-5 text-white" />
               </a>

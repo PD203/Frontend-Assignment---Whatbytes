@@ -58,7 +58,7 @@ export default function ProductDetails({ product }: { product: Product }) {
           </h1>
 
           <div className="flex items-center gap-2">
-            <Rating value={product.rating.rate} />
+            <Rating value={product.rating} />
             <span className="text-sm text-gray-500">
               {product.rating.rate} rating
             </span>

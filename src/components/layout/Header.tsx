@@ -1,30 +1,40 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import { Search, ShoppingCart, User } from "lucide-react";
 import { useFilters } from "@/context/FilterContext";
 import { useCartStore } from "@/store/useCartStore";
+import { useRouter } from "next/navigation";
 
 export default function Header() {
   const { filters, setFilters } = useFilters();
-  
-  const cartCount = useCartStore((state) =>
-  state.items.reduce((sum, item) => sum + item.quantity, 0)
-);
+  const router = useRouter();
 
+  const cartCount = useCartStore((state) =>
+    state.items.reduce((sum, item) => sum + item.quantity, 0)
+  );
+
+  const handleSearchKeyDown = (
+    e: React.KeyboardEvent<HTMLInputElement>
+  ) => {
+    if (e.key === "Enter") {
+      const query = filters.search.trim();
+      if (!query) return;
+
+      router.push(`/?search=${encodeURIComponent(query)}`);
+    }
+  };
 
   return (
     <header
       className="
         sticky top-0 z-[9999]
-        bg-gradient-to-r
-        from-[var(--primary-dark)]
-        to-[var(--primary)]
+        bg-primary
       "
     >
       <div className="max-w-7xl mx-auto px-6">
         <div className="h-16 grid grid-cols-[auto_1fr_auto] items-center gap-6">
+          
           {/* LEFT — LOGO */}
           <div className="text-white text-2xl font-bold tracking-wide">
             Whatbytes
@@ -44,6 +54,7 @@ export default function Header() {
                     search: e.target.value,
                   }))
                 }
+                onKeyDown={handleSearchKeyDown}
                 placeholder="Search for products..."
                 className="
                   w-full h-11 rounded-lg
@@ -60,19 +71,20 @@ export default function Header() {
 
           {/* RIGHT */}
           <div className="flex items-center gap-4">
+            
             {/* CART BUTTON */}
             <Link href="/cart">
               <button
                 className="
-                relative flex items-center gap-2
-                bg-[var(--primary-dark)]
-                hover:bg-[var(--primary-hover)]
-                transition
-                px-5 py-2 rounded-lg
-                text-white font-medium
-                shadow-md
-                cursor-pointer
-              "
+                  relative flex items-center gap-2
+                  bg-[var(--primary-dark)]
+                  hover:bg-[var(--primary-hover)]
+                  transition
+                  px-5 py-2 rounded-lg
+                  text-white font-medium
+                  shadow-md
+                  cursor-pointer
+                "
               >
                 <ShoppingCart className="h-5 w-5" />
                 <span>Cart</span>
@@ -89,8 +101,8 @@ export default function Header() {
             <button
               className="
                 w-9 h-9 rounded-full
-                bg-white/20
-                hover:bg-white/30
+                bg-primary-dark
+                hover:bg-[var(--primary-hover)]
                 transition
                 flex items-center justify-center
                 cursor-pointer
