@@ -60,7 +60,7 @@ export default function ProductDetails({ product }: { product: Product }) {
           <div className="flex items-center gap-2">
             <Rating value={product.rating} />
             <span className="text-sm text-gray-500">
-              {product.rating.rate} rating
+              {product.rating} rating
             </span>
           </div>
 
