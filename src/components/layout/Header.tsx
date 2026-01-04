@@ -1,13 +1,18 @@
 "use client";
 
 import Link from "next/link";
-
+import { useEffect, useState } from "react";
 import { Search, ShoppingCart, User } from "lucide-react";
 import { useFilters } from "@/context/FilterContext";
+import { useCartStore } from "@/store/useCartStore";
 
 export default function Header() {
   const { filters, setFilters } = useFilters();
-  const cartCount = 3;
+  
+  const cartCount = useCartStore((state) =>
+  state.items.reduce((sum, item) => sum + item.quantity, 0)
+);
+
 
   return (
     <header
@@ -20,7 +25,6 @@ export default function Header() {
     >
       <div className="max-w-7xl mx-auto px-6">
         <div className="h-16 grid grid-cols-[auto_1fr_auto] items-center gap-6">
-
           {/* LEFT — LOGO */}
           <div className="text-white text-2xl font-bold tracking-wide">
             Whatbytes
@@ -54,13 +58,12 @@ export default function Header() {
             </div>
           </div>
 
-          {/* RIGHT — ACTIONS */}
+          {/* RIGHT */}
           <div className="flex items-center gap-4">
-
             {/* CART BUTTON */}
             <Link href="/cart">
-            <button
-              className="
+              <button
+                className="
                 relative flex items-center gap-2
                 bg-[var(--primary-dark)]
                 hover:bg-[var(--primary-hover)]
@@ -70,16 +73,16 @@ export default function Header() {
                 shadow-md
                 cursor-pointer
               "
-            >
-              <ShoppingCart className="h-5 w-5" />
-              <span>Cart</span>
+              >
+                <ShoppingCart className="h-5 w-5" />
+                <span>Cart</span>
 
-              {cartCount > 0 && (
-                <span className="absolute -top-2 -right-2 w-5 h-5 bg-red-500 text-white text-xs font-bold rounded-full flex items-center justify-center">
-                  {cartCount}
-                </span>
-              )}
-            </button>
+                {cartCount > 0 && (
+                  <span className="absolute -top-2 -right-2 w-5 h-5 bg-red-500 text-white text-xs font-bold rounded-full flex items-center justify-center">
+                    {cartCount}
+                  </span>
+                )}
+              </button>
             </Link>
 
             {/* AVATAR */}
@@ -95,7 +98,6 @@ export default function Header() {
             >
               <User className="h-5 w-5 text-white" />
             </button>
-
           </div>
         </div>
       </div>

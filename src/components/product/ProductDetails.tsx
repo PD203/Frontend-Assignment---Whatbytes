@@ -4,24 +4,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import Rating from "@/components/product/Rating";
+import { useCartStore } from "@/store/useCartStore";
+import { Product } from "@/store/useCartStore";
 
-type Product = {
-  id: number;
-  title: string;
-  price: number;
-  image: string;
-  category: string;
-  brand: string;
-  rating: number;
-  description: string;
-};
-
-export default function ProductDetails({
-  product,
-}: {
-  product: Product;
-}) {
+export default function ProductDetails({ product }: { product: Product }) {
   const [quantity, setQuantity] = useState(1);
+  const { addToCart } = useCartStore();
 
   const increaseQuantity = () => {
     setQuantity((prev) => prev + 1);
@@ -29,6 +17,10 @@ export default function ProductDetails({
 
   const decreaseQuantity = () => {
     setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
+  };
+
+  const onAddToCart = () => {
+    addToCart(product, quantity);
   };
 
   return (
@@ -42,7 +34,6 @@ export default function ProductDetails({
       </Link>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
-        
         {/* LEFT — Image */}
         <div className="rounded-2xl bg-white p-6 flex items-center justify-center">
           <div className="relative w-full aspect-square">
@@ -67,9 +58,9 @@ export default function ProductDetails({
           </h1>
 
           <div className="flex items-center gap-2">
-            <Rating value={product.rating} />
+            <Rating value={product.rating.rate} />
             <span className="text-sm text-gray-500">
-              {product.rating} rating
+              {product.rating.rate} rating
             </span>
           </div>
 
@@ -82,7 +73,9 @@ export default function ProductDetails({
               Description
             </h3>
             <p className="text-gray-600 leading-relaxed">
-              {product.description}
+              In publishing and graphic design, Lorem ipsum is a placeholder
+              text commonly used to demonstrate the visual form of a document
+              or a typeface without relying on meaningful content.
             </p>
           </div>
 
@@ -98,9 +91,7 @@ export default function ProductDetails({
               >
                 −
               </button>
-              <span className="text-lg font-medium">
-                {quantity}
-              </span>
+              <span className="text-lg font-medium">{quantity}</span>
               <button
                 className="h-10 w-10 rounded-md border cursor-pointer border-gray-300 text-lg"
                 onClick={increaseQuantity}
@@ -111,7 +102,10 @@ export default function ProductDetails({
           </div>
 
           {/* Add to Cart */}
-          <button className="mt-6 flex w-full cursor-pointer items-center justify-center gap-2 rounded-md bg-primary py-3 text-white text-lg font-semibold hover:bg-primary-hover transition">
+          <button
+            onClick={onAddToCart}
+            className="mt-6 flex w-full cursor-pointer items-center justify-center gap-2 rounded-md bg-primary py-3 text-white text-lg font-semibold hover:bg-primary-hover transition"
+          >
             Add to Cart
           </button>
 
