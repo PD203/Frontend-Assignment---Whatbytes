@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+
 import { Search, ShoppingCart, User } from "lucide-react";
 import { useFilters } from "@/context/FilterContext";
 
@@ -56,6 +58,7 @@ export default function Header() {
           <div className="flex items-center gap-4">
 
             {/* CART BUTTON */}
+            <Link href="/cart">
             <button
               className="
                 relative flex items-center gap-2
@@ -77,6 +80,7 @@ export default function Header() {
                 </span>
               )}
             </button>
+            </Link>
 
             {/* AVATAR */}
             <button
