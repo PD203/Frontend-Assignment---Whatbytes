@@ -1,6 +1,6 @@
 # Frontend Assignment - Whatbytes
 
-![Home](h[ttps://your-screenshot-link-here.png](https://res.cloudinary.com/dpfvh7e5x/image/upload/v1767526777/Screenshot_2026-01-04_at_5.01.40_PM_mjhllj.png))
+https://res.cloudinary.com/dpfvh7e5x/image/upload/v1767526777/Screenshot_2026-01-04_at_5.01.40_PM_mjhllj.png
 
 
 Live - https://frontend-assignment-whatbytes-beta.vercel.app/
