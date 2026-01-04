@@ -25,8 +25,8 @@ export default function ProductCard({ product }: { product: Product }) {
         title: product.title,
         price: product.price,
         image: product.image,
-        category: "", // optional if required by store
-        rating: { rate: product.rating ?? 0, count: 0 },
+        category: "",
+        rating: product.rating || 0,
       },
       1
     );
